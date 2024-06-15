@@ -7,7 +7,7 @@ import {
 import { useProjectStatusStore } from '@/store/status'
 import { useMemberStore } from '@/store/member'
 import { useTaskStore } from '@/store/task'
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 import { useContext, useEffect, useRef } from 'react'
 
 let timeout = 0
@@ -15,7 +15,7 @@ export default function useUpdateGroupbyItem() {
   const { statuses } = useProjectStatusStore()
   const { members } = useMemberStore()
   const { tasks } = useTaskStore()
-  const { projectId } = useParams()
+  const { projectId } = useGetParams()
 
   const oldGroupByType = useRef('')
   const oldStatusList = useRef(statuses)

@@ -1,7 +1,7 @@
 import { ProjectView, ProjectViewType } from '@prisma/client'
 import { useProjectViewContext } from './context'
 
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 import { useState } from 'react'
 import { useProjectViewAdd } from './useProjectViewAdd'
 import ProjectViewFilterByBoard from '../ProjectViewFilter/BoardFilter'
@@ -27,7 +27,7 @@ export default function ProjectViewModalForm({
   name: string
   desc: string
 }) {
-  const { projectId } = useParams()
+  const { projectId } = useGetParams()
   const { setVisible, name: viewName, icon, onlyMe, setOnlyMe, setName, filter, customView, setCustomView } = useProjectViewContext()
   const [loading, setLoading] = useState(false)
   const { addProjectView } = useProjectViewAdd()
@@ -49,7 +49,7 @@ export default function ProjectViewModalForm({
 
   const addHandler = () => {
 
-    addProjectView({
+    projectId && addProjectView({
       onlyMe: onlyMe || false,
       icon,
       name: viewName || name,
@@ -103,20 +103,20 @@ export default function ProjectViewModalForm({
     hideModal()
 
     projectView.update({
-      id,
-      icon,
-      onlyMe: onlyMe || false,
-      type,
-      name: viewName,
-      data: customView ? dataView : undefined
+        id,
+        icon,
+        onlyMe: onlyMe || false,
+        type,
+        name: viewName,
+        data: customView ? dataView : undefined
     }).then(res => {
-      console.log(res)
-      messageSuccess('Update view successfully')
+        console.log(res)
+        messageSuccess('Update view successfully')
 
     }).catch(err => {
-      console.log(err)
+        console.log(err)
       messageError("Update view failed !")
-    })
+      })
   }
 
   const onSubmit = () => {

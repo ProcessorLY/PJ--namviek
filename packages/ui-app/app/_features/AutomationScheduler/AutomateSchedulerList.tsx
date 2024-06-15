@@ -4,14 +4,14 @@ import { Scheduler } from '@prisma/client'
 import { dateFormat } from '@shared/libs'
 import { Button, Loading, confirmWarning } from '@shared/ui'
 
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 import { useState } from 'react'
 import { HiOutlinePlus, HiOutlineTrash } from 'react-icons/hi2'
 import { ISchedulerTrigger } from './context'
 
 const useSchedulerList = () => {
   const [loading, setLoading] = useState(true)
-  const { projectId } = useParams()
+  const { projectId } = useGetParams()
   const [schedulers, setScheduler] = useState<Scheduler[]>([])
 
   useDebounce(() => {

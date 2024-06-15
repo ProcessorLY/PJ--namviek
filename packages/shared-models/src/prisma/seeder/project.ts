@@ -1,5 +1,6 @@
-import { MemberRole, ProjectViewType, StatusType } from "@prisma/client"
+import { MemberRole, Project, ProjectViewType, StatusType } from "@prisma/client"
 import { pmClient } from "../../lib/_prisma"
+import { generateSlug } from "@shared/libs"
 
 export const createProject = async (body: {
   icon?: string
@@ -21,6 +22,7 @@ export const createProject = async (body: {
         icon: body.icon || '',
         projectViewId: null,
         name: body.name,
+        slug: generateSlug(body.name),
         desc: body.desc,
         createdBy: body.uid,
         isArchived: false,
@@ -166,4 +168,40 @@ export const createProject = async (body: {
 
   })
 
+}
+
+
+export const updateAllProjectSlug = async () => {
+  const projects = await pmClient.project.findMany({
+    select: {
+      id: true,
+      name: true
+    }
+  })
+
+  const promises = []
+  for (const project of projects) {
+    const { id, name } = project
+    const slug = generateSlug(name)
+
+    promises.push(updateProject(id, { name, slug }))
+  }
+
+  await Promise.allSettled(promises)
+}
+
+export const updateProject = async (id: string, data: Partial<Project>) => {
+  try {
+    await pmClient.project.update({
+      data: data,
+      where: {
+        id,
+      },
+    })
+
+    console.log('update project succesfully')s
+  } catch (error) {
+    console.log('update project error', error)
+    return null
+  }
 }

@@ -1,17 +1,17 @@
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 import { useUser } from '@goalie/nextjs'
 import { PartialTask, useTaskStore } from '@/store/task'
 import { taskUpdate, taskUpdateMany } from '@/services/task'
 import { messageError, messageSuccess, messageWarning } from '@shared/ui'
 import { Task, TaskPriority } from '@prisma/client'
 import { useTaskAutomation } from './useTaskAutomation'
-import { ITaskDefaultValues } from '../[orgName]/project/[projectId]/TaskForm'
+import { ITaskDefaultValues } from '../[orgName]/project/[projectName]/TaskForm'
 import { useProjectStatusStore } from '@/store/status'
 import localforage from 'localforage'
 
 export const useServiceTaskUpdate = () => {
   const { user } = useUser()
-  const { projectId } = useParams()
+  const { projectId } = useGetParams()
   const { updateTask, updateMultipleTask } = useTaskStore()
   const { statusDoneId } = useProjectStatusStore()
   const { refactorTaskFieldByAutomationConfig } = useTaskAutomation()

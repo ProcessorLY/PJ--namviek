@@ -1,16 +1,16 @@
 import { taskDelete } from '@/services/task'
 import { useTaskStore } from '@/store/task'
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 
 export const useServiceTaskDel = () => {
-  const { projectId } = useParams()
+  const { projectId } = useGetParams()
   const { delTask } = useTaskStore()
 
   const deleteTask = (id: string) => {
     console.log('delete task called', id)
     delTask(id)
 
-    taskDelete({
+    projectId && taskDelete({
       projectId,
       id
     })

@@ -1,13 +1,11 @@
 import ListBoxCreate from '@/components/ListBox/ListBoxCreate'
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 import { useVisionContext } from './context'
 import { endOfMonth } from 'date-fns'
 import { messageError } from '@shared/ui'
-import { useGetParams } from '@/hooks/useGetParams'
 
 export default function VisionCreate() {
-  const { projectId } = useParams()
-  const { orgId } = useGetParams()
+  const { orgId, projectId } = useGetParams()
   const { createNewVision, filter } = useVisionContext()
   const { month } = filter
   const onEnter = (v: string) => {

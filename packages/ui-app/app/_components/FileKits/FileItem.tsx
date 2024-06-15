@@ -6,13 +6,14 @@ import { format, formatDistanceToNow } from 'date-fns'
 import { useParams, useSearchParams } from 'next/navigation'
 import { taskMakeCover } from '@/services/task'
 import { useTaskStore } from '@/store/task'
+import { useGetParams } from '@/hooks/useGetParams'
 
 export default function FileItem({ data }: { data: IFileItem }) {
   const { name, url, ext, mimeType, uploading, id, createdAt } = data
   const { taskId } = useFileKitContext()
   // const sp = useSearchParams()
   // const taskId = sp.get('taskId')
-  const { projectId } = useParams()
+  const { projectId } = useGetParams()
   const { updateTask } = useTaskStore()
 
   const createdDate = createdAt
@@ -25,6 +26,8 @@ export default function FileItem({ data }: { data: IFileItem }) {
       messageWarning('Can not turn this to cover => TaskId not found')
       return
     }
+
+    if(!projectId) return
 
     updateTask({
       id: taskId,

@@ -7,10 +7,10 @@ import { HiOutlineUserPlus } from 'react-icons/hi2'
 import { FcBriefcase, FcOrganization, FcVideoCall } from 'react-icons/fc'
 import { Tooltip } from '@shared/ui'
 import ThemeSelection from './ThemeSelection'
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 
 export default function RootSidebar() {
-  const { orgName } = useParams()
+  const { orgName } = useGetParams()
 
   return (
     <nav className="primary-sidebar">

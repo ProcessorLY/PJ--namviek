@@ -5,7 +5,7 @@ import {
   storageSaveToDrive
 } from '@/services/storage'
 import { FileOwnerType, FileStorage, FileType } from '@prisma/client'
-import { useParams, useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { IFileItem, IFileUploadItem, isImage, useFileKitContext } from './context'
 import {
   confirmAlert,
@@ -16,8 +16,6 @@ import {
 } from '@shared/ui'
 import { AxiosError } from 'axios'
 import { useSetDefaultCover } from './useSetDefaultCover'
-import { useEffect, useState } from 'react'
-import { onPushStateRun } from 'packages/ui-app/libs/pushState'
 import { useGetParams } from '@/hooks/useGetParams'
 
 export default function useFileUpload() {
@@ -25,7 +23,7 @@ export default function useFileUpload() {
   const { uploading, setUploading, setPreviewFiles, taskId } = useFileKitContext()
   const { setDefaultCover } = useSetDefaultCover()
   const { orgId } = useGetParams()
-  const { projectId, orgName } = useParams()
+  const { orgName, projectId } = useGetParams()
   const { push } = useRouter()
   // const sp = useSearchParams()
   // const taskId = sp.get('taskId')
@@ -56,7 +54,7 @@ export default function useFileUpload() {
 
   const doUpload = async (f: IFileUploadItem): Promise<IFileItem | null> => {
     try {
-      if (!orgId) return null
+      if (!orgId || !projectId) return null
 
       const { data: file, randId } = f
       const sliceName = file.name.split('.')

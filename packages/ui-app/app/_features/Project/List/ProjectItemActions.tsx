@@ -5,7 +5,7 @@ import useServiceProjectArchive from '@/hooks/useServiceProjectArchive'
 import { projectService } from '@/services/project'
 import { Project } from '@prisma/client'
 import { DropdownMenu } from '@shared/ui'
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 import { HiOutlineArchive, HiOutlineDotsVertical } from 'react-icons/hi'
 import { HiOutlineStar } from 'react-icons/hi2'
 
@@ -18,7 +18,7 @@ export default function ProjectItemAction({
   project: Project
   isArchived?: boolean
 }) {
-  const { orgName } = useParams()
+  const { orgName } = useGetParams()
   const { addToFavorite } = useServiceFavoriteUpdate()
   const { moveToArchive, removeFromArchive } = useServiceProjectArchive()
 

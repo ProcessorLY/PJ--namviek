@@ -1,14 +1,14 @@
 'use client'
 
 import { useEffect } from 'react'
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 import { setRecentVist } from '@shared/libs'
 import { useServiceAutomation } from '@/hooks/useServiceAutomation'
 import { useTodoFilter } from '@/features/TaskFilter/useTodoFilter'
 import { useUrl } from '@/hooks/useUrl'
 import { useDebounce } from '@/hooks/useDebounce'
 
-import ProjectNav from '../../[orgName]/project/[projectId]/ProjectNav'
+import ProjectNav from '../../[orgName]/project/[projectName]/ProjectNav'
 import useGetProjectStatus from './useGetProjectStatus'
 import useGetTask from './useGetTask'
 import { useGetMembers } from './useGetMembers'
@@ -24,7 +24,7 @@ import { useGetProjectViewList } from './useGetProjectViewList'
 import { useEventSyncProjectTask } from '@/events/useEventSyncProjectTask'
 
 function SaveRecentVisitPage() {
-  const { projectId, orgName } = useParams()
+  const { projectName, orgName } = useGetParams()
   const { user } = useUser()
   const { getSp } = useUrl()
 
@@ -33,27 +33,27 @@ function SaveRecentVisitPage() {
     if (user && user.id) {
       setRecentVist(
         user.id,
-        `/${orgName}/project/${projectId}?mode=${getSp('mode')}`
+        `/${orgName}/project/${projectName}?mode=${getSp('mode')}`
       )
     }
-  }, [user, projectId, orgName])
+  }, [user, projectName, orgName])
 
   return <></>
 }
 
 function useRegisterEvents() {
-
-  const { projectId } = useParams()
+  const { projectId } = useGetParams()
 
   // realtime events
   useEventSyncProjectMember(projectId)
   useEventSyncProjectView(projectId)
   useEventSyncProjectStatus(projectId)
   useEventSyncProjectTask(projectId)
+  
 }
 
 function useGetAutomationRulesByProject() {
-  const { projectId } = useParams()
+  const { projectId } = useGetParams()
   const { getAutomationByProject } = useServiceAutomation()
   useEffect(() => {
     if (projectId) {
@@ -87,7 +87,7 @@ function PrefetchData() {
 export default function ProjectContainer() {
 
   return <>
-    <PrefetchData />
-    <SaveRecentVisitPage />
+      <PrefetchData />
+      <SaveRecentVisitPage />
     <ProjectNav /></>
 }

@@ -1,6 +1,4 @@
 import useOutsideClick from '@/hooks/useOutsideClick'
-import { useServiceTaskAdd } from '@/hooks/useServiceTaskAdd'
-import { useParams } from 'next/navigation'
 import { useEffect, useRef, useState, KeyboardEvent } from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
 
@@ -59,15 +57,15 @@ export default function ListBoxCreate({
         setVisible(true)
       }}
       className={`cursor-pointer group px-3 py-2 text-sm rounded-b-md flex items-center justify-between ${visible ? 'bg-gray-50 dark:bg-gray-800' : ''
-        }`}>
+      }`}>
       <div className="flex items-center gap-2 w-full">
         <AiOutlinePlus
           className={`text-gray-500 shrink-0 ${visible ? 'text-indigo-500' : ''
-            }`}
+          }`}
         />
         <span
           className={`text-gray-400 cursor-pointer group-hover:text-gray-500 ${visible ? 'hidden' : ''
-            }`}
+          }`}
           onClick={() => setVisible(true)}>
           {placeholder}
         </span>
@@ -76,7 +74,7 @@ export default function ListBoxCreate({
           onKeyUp={onKeyup}
           placeholder={guide}
           className={`bg-transparent outline-none w-full ${visible ? '' : 'hidden'
-            }`}
+          }`}
         />
       </div>
     </div>

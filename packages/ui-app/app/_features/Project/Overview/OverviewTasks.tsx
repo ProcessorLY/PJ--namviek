@@ -1,21 +1,21 @@
 import { Task } from '@prisma/client'
-import { useParams } from 'next/navigation'
-import TaskAssignee from 'packages/ui-app/app/[orgName]/project/[projectId]/views/TaskAssignee'
-import TaskPriorityCell from 'packages/ui-app/app/[orgName]/project/[projectId]/views/TaskPriorityCell'
-import TaskStatus from 'packages/ui-app/app/[orgName]/project/[projectId]/views/TaskStatus'
+import { useGetParams } from '@/hooks/useGetParams'
+import TaskAssignee from 'packages/ui-app/app/[orgName]/project/[projectName]/views/TaskAssignee'
+import TaskPriorityCell from 'packages/ui-app/app/[orgName]/project/[projectName]/views/TaskPriorityCell'
+import TaskStatus from 'packages/ui-app/app/[orgName]/project/[projectName]/views/TaskStatus'
 // import { taskGetAll } from 'packages/ui-app/services/task'
 import { useEffect, useState } from 'react'
 
 import { taskGetAll } from '@/services/task'
 
 export default function OverviewTask() {
-  const { projectId } = useParams()
+  const { projectId } = useGetParams()
   const [tasks, setTasks] = useState<Task[]>([])
   const tabs = ['today', 'overdue', 'upcoming']
   const [selected, setSelected] = useState(0)
 
   useEffect(() => {
-    taskGetAll(projectId).then(res => {
+    projectId && taskGetAll(projectId).then(res => {
       console.log(res)
       const { status, data } = res.data
 

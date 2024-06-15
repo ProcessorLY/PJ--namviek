@@ -3,13 +3,11 @@ import { useState } from 'react'
 import { HiOutlineBell, HiOutlineSquare2Stack } from 'react-icons/hi2'
 import { useSchedulerContext } from './context'
 import { schedulerService } from '@/services/scheduler'
-import { useParams } from 'next/navigation'
-import MultiMemberPicker from '@/components/MultiMemberPicker'
 import { useGetParams } from '@/hooks/useGetParams'
+import MultiMemberPicker from '@/components/MultiMemberPicker'
 
 export default function ActionList({ back }: { back: () => void }) {
-  const { projectId } = useParams()
-  const { orgId } = useGetParams()
+  const { orgId, projectId } = useGetParams()
   const { trigger } = useSchedulerContext()
   const [content, setContent] = useState({
     title: '',
@@ -18,7 +16,7 @@ export default function ActionList({ back }: { back: () => void }) {
   })
 
   const onCreate = () => {
-    if (!orgId) return
+    if (!orgId || !projectId) return
 
     schedulerService
       .create({

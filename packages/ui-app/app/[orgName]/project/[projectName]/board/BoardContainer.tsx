@@ -47,7 +47,7 @@ export default function BoardContainer() {
     // reorder task
     if (sourceColId === destColId) {
       // realtime update to another users in project
-      triggerEventTaskReorder({
+      projectId && triggerEventTaskReorder({
         projectId,
         sourceIndex,
         destIndex,
@@ -63,7 +63,7 @@ export default function BoardContainer() {
     }
 
     if (sourceColId !== destColId) {
-      triggerEventMoveTaskToOtherBoard({
+      projectId && triggerEventMoveTaskToOtherBoard({
         projectId,
         sourceColId,
         destColId,

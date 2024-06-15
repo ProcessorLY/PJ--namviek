@@ -4,7 +4,7 @@ import { useGetParams } from './useGetParams'
 
 export const useUrl = () => {
   const { orgId } = useGetParams()
-  const { projectId } = useParams()
+  const { projectId } = useGetParams()
   const pathname = usePathname()
   const sp = useSearchParams()
   const [searchPath, setSearchPath] = useState('')

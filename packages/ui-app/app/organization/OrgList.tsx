@@ -92,7 +92,8 @@ export default function OrgList() {
                 setOrgInfo({
                   name: org.name,
                   cover: org.cover || '',
-                  id: org.id
+                  id: org.id,
+                  orgSlugName: org.slug
                 })
               }} key={org.id} href={`/${org.slug}/my-works`}>
                 <motion.div

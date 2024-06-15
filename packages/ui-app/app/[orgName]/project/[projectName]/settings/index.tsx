@@ -9,10 +9,11 @@ import './style.css'
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import ProjectMemberManager from '../ProjectMemberManager'
 import ProjectNotificationSetting from '@/features/ProjectSetting/Notification'
+import { useGetParams } from '@/hooks/useGetParams'
 
 const Setting = () => {
   const { push } = useRouter()
-  const { orgID, projectId } = useParams()
+  const { orgId, projectName } = useGetParams()
   const searchParams = useSearchParams()
   const tab = searchParams.get('tab')
 
@@ -24,7 +25,7 @@ const Setting = () => {
       title: 'Points',
       active: !tab ? true : tab === 'points' ? true : false,
       content: <ProjectPoint />,
-      href: `${orgID}/project/${projectId}?mode=setting&tab=points`,
+      href: `${orgId}/project/${projectName}?mode=setting&tab=points`,
       desc: 'Story points are an Agile estimation technique that gives you a relative estimate of how much work and effort will go into a particular task.'
     },
     {
@@ -33,7 +34,7 @@ const Setting = () => {
       ),
       title: 'Statuses',
       active: tab === 'statuses',
-      href: `${orgID}/project/${projectId}?mode=setting&tab=statuses`,
+      href: `${orgId}/project/${projectName}?mode=setting&tab=statuses`,
       content: <ProjectStatus />,
       desc: 'Project status refers to the level of progress it achieves in working toward an end goal.'
     },
@@ -43,7 +44,7 @@ const Setting = () => {
     //   ),
     //   title: 'Integrations',
     //   active: tab === 'integrations',
-    //   href: `${orgID}/project/${projectId}?mode=setting&tab=integrations`,
+    //   href: `${orgID}/project/${projectName}?mode=setting&tab=integrations`,
     //   content: <ProjectPoint />,
     //   desc: 'Tools you can incorporate into the Slack interface to expand your remote work capabilities. It lets you access more functionalities from a single platform.'
     // },
@@ -53,7 +54,7 @@ const Setting = () => {
       ),
       title: 'Members',
       active: tab === 'members',
-      href: `${orgID}/project/${projectId}?mode=setting&tab=members`,
+      href: `${orgId}/project/${projectName}?mode=setting&tab=members`,
       content: <ProjectMemberManager />,
       desc: 'Where you can send add users to the projects. It also helps you to grant access to a specific member.'
     },
@@ -63,7 +64,7 @@ const Setting = () => {
       ),
       title: 'Notification',
       active: tab === 'notification',
-      href: `${orgID}/project/${projectId}?mode=setting&tab=notification`,
+      href: `${orgId}/project/${projectName}?mode=setting&tab=notification`,
       content: <ProjectNotificationSetting />,
       desc: 'Enable automatic notifications to stay on top of important tasks'
     }

@@ -6,7 +6,7 @@ import { useGetStatusHandler } from '@/features/ProjectContainer/useGetProjectSt
 
 // @description
 // it will be ran as an user create / delete / update a view
-export const useEventSyncProjectStatus = (projectId: string) => {
+export const useEventSyncProjectStatus = (projectId?: string) => {
   const { user } = useUser()
   const { channelTeamCollab } = usePusher()
   const { fetchNCache } = useGetStatusHandler(projectId)

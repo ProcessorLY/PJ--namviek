@@ -1,20 +1,19 @@
 import { useTaskFilter } from '@/features/TaskFilter/context'
 import useTaskFilterContext from '@/features/TaskFilter/useTaskFilterContext'
+import { useGetParams } from '@/hooks/useGetParams'
 import { projectStatusUpdateOrder } from '@/services/status'
 import { taskUpdate } from '@/services/task'
 import { useProjectStatusStore } from '@/store/status'
 import { useTaskStore } from '@/store/task'
 import { Task, TaskPriority } from '@prisma/client'
 import { messageError, messageSuccess } from '@shared/ui'
-import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 // import { useRef } from "react"
 
 export const useBoardAction = () => {
   const { updateTask } = useTaskStore()
-  const { isGroupbyStatus, isGroupbyAssignee, isGroupbyPriority } =
-    useTaskFilterContext()
-  const { projectId } = useParams()
+  const { isGroupbyStatus, isGroupbyAssignee, isGroupbyPriority } = useTaskFilterContext()
+  const { projectId } = useGetParams()
   const [updateSttCounter, setUpdateSttCounter] = useState(0)
   const { statuses, swapOrder } = useProjectStatusStore()
   // const timeout = useRef(0)
@@ -31,11 +30,12 @@ export const useBoardAction = () => {
     syncServerDataAsWell = true
   ) => {
     console.log('move task to another group', taskId, groupId)
-    if (!groupId) return
+    if (!groupId || !projectId) return
 
     // if (timeout.current) {
     //   clearTimeout(timeout.current)
     // }
+    
 
     const data: Partial<Task> = {
       id: taskId,

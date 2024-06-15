@@ -3,6 +3,7 @@ import { httpPost } from '@/services/_req'
 // import { channelTeamCollab } from '@shared/libs'
 import { useEffect } from 'react'
 import { usePusher } from './usePusher'
+import { useGetParams } from '@/hooks/useGetParams'
 
 export const triggerEventMoveTaskToOtherBoard = (data: {
   sourceColId: string
@@ -16,7 +17,7 @@ export const triggerEventMoveTaskToOtherBoard = (data: {
 }
 
 export const useEventMoveTaskToOtherBoard = (cb: (data: unknown) => void) => {
-  const { projectId } = useUrl()
+  const { projectId } = useGetParams()
   const { channelTeamCollab } = usePusher()
 
   useEffect(() => {

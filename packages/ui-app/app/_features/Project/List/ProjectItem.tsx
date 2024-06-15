@@ -7,6 +7,7 @@ import { formatDistanceToNow } from 'date-fns'
 import { useParams, useRouter } from 'next/navigation'
 import { AiOutlineClockCircle } from 'react-icons/ai'
 import ProjectItemAction from './ProjectItemActions'
+import { useGetParams } from '@/hooks/useGetParams'
 
 export default function ProjectItem({
   project,
@@ -15,12 +16,12 @@ export default function ProjectItem({
   project: Project
   isArchived?: boolean
 }) {
-  const { orgName } = useParams()
+  const { orgName } = useGetParams()
   const { push } = useRouter()
   const { selectProject } = useProjectStore(state => state)
   const createdAt = project.createdAt
   const createdAtString = createdAt ? dateFormat(new Date(createdAt), 'PP') : ''
-  const url = `${orgName}/project/${project.id}?mode=task`
+  const url = `${orgName}/project/${project.slug}?mode=task`
 
   const onSelectProject = (id: string) => {
     selectProject(id)

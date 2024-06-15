@@ -1,5 +1,6 @@
 'use client'
 import { useUserRole } from '@/features/UserPermission/useUserRole'
+import { useGetParams } from '@/hooks/useGetParams'
 import Link from 'next/link'
 import { useParams, usePathname } from 'next/navigation'
 import { AiOutlineAppstoreAdd, AiOutlineCloudDownload } from 'react-icons/ai'
@@ -8,7 +9,7 @@ import { HiOutlineServerStack } from 'react-icons/hi2'
 
 export default function SettingTabLayout() {
   const { orgRole } = useUserRole()
-  const params = useParams()
+  const { orgName } = useGetParams()
   const pathname = usePathname()
   const tabs = [
     {
@@ -63,7 +64,7 @@ export default function SettingTabLayout() {
 
         return (
           <Link
-            href={`${params.orgName}/setting/${tab.name}`}
+            href={`${orgName}/setting/${tab.name}`}
             className={`tab-item ${isActive}`}
             key={index}>
             <Icon />

@@ -7,13 +7,13 @@ import { useUrl } from '@/hooks/useUrl'
 import { useTaskFilter } from '@/features/TaskFilter/context'
 import differenceInDays from 'date-fns/differenceInDays'
 import { TaskType } from '@prisma/client'
-
+import { useGetParams } from '@/hooks/useGetParams'
 
 let index = 0
 
 export default function CalMonthTaskList({ day }: { day: Date }) {
   const { tasks } = useTaskStore()
-  const { orgName, projectId } = useParams()
+  const { orgName, projectName } = useGetParams()
   const { getSp } = useUrl()
 
   const mode = getSp('mode')
@@ -24,7 +24,7 @@ export default function CalMonthTaskList({ day }: { day: Date }) {
   }
 
   return (
-    <div className='calendar-month-tasks'>
+    <div className="calendar-month-tasks">
       {tasks.map(task => {
         if (!task.dueDate) return null
         const dueDate = new Date(task.dueDate)
@@ -42,12 +42,13 @@ export default function CalMonthTaskList({ day }: { day: Date }) {
 
         const h = dueDate.getHours()
         const m = dueDate.getMinutes()
-        const time = `${h > 9 ? (h > 12 ? h - 12 : h) : '0' + h}:${m > 9 ? m : '0' + m
-          } ${h >= 12 ? 'PM' : 'AM'}`
+        const time = `${h > 9 ? (h > 12 ? h - 12 : h) : '0' + h}:${
+          m > 9 ? m : '0' + m
+        } ${h >= 12 ? 'PM' : 'AM'}`
 
         return (
           <CalMonthTask
-            link={`${orgName}/project/${projectId}?mode=${mode}&taskId=${task.id}`}
+            link={`${orgName}/project/${projectName}?mode=${mode}&taskId=${task.id}`}
             key={task.id}
             type={task.type || TaskType.TASK}
             time={time}

@@ -15,11 +15,10 @@ import {
 } from 'react'
 import { HiOutlinePlus, HiX } from 'react-icons/hi'
 import { orgMemberSearch } from '../../../../services/organizationMember'
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 import { UserMember, useMemberStore } from '../../../../store/member'
 import { MemberRole, OrganizationMembers, User } from '@prisma/client'
 import { memAddNewToProject } from '../../../../services/member'
-import { useGetParams } from '@/hooks/useGetParams'
 
 let timeout = 0
 
@@ -87,8 +86,12 @@ const MemberAvatarWithName = ({
     <div className="flex items-center gap-3">
       <Avatar src={photo || ''} name={name || ''} size="lg" />
       <div className="flex flex-col text-sm">
-        <span className="text-gray-700 dark:text-gray-400 font-medium">{name}</span>
-        <span className="text-gray-400 dark:text-gray-500 text-xs">{email}</span>
+        <span className="text-gray-700 dark:text-gray-400 font-medium">
+          {name}
+        </span>
+        <span className="text-gray-400 dark:text-gray-500 text-xs">
+          {email}
+        </span>
       </div>
     </div>
   )
@@ -111,8 +114,7 @@ export default function ProjectMemberAdd({
 }: {
   triggerBtn?: ReactNode
 }) {
-  const { projectId } = useParams()
-  const { orgId } = useGetParams()
+  const { orgId, projectId } = useGetParams()
   const [visible, setVisible] = useState(false)
   const [loading, setLoading] = useState(false)
   const [searchResults, updateSearchResults] = useState<User[]>([])
@@ -128,14 +130,15 @@ export default function ProjectMemberAdd({
 
     setVisible(false)
     addMember(refactorMembers)
-    memAddNewToProject(projectId, refactorMembers)
-      .then(res => {
-        console.log('res', res)
-      })
-      .catch(err => {
-        console.log(err)
-        messageError('Can not add member to project, please refresh the page')
-      })
+    projectId &&
+      memAddNewToProject(projectId, refactorMembers)
+        .then(res => {
+          console.log('res', res)
+        })
+        .catch(err => {
+          console.log(err)
+          messageError('Can not add member to project, please refresh the page')
+        })
   }
 
   const onChange = (ev: ChangeEvent<HTMLInputElement>) => {
@@ -153,7 +156,7 @@ export default function ProjectMemberAdd({
       if (!orgId) return
 
       setLoading(true)
-      orgMemberSearch({
+      projectId && orgMemberSearch({
         projectId,
         orgId,
         term: value

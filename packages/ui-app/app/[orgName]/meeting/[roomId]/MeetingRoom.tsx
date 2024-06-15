@@ -19,10 +19,12 @@ import { useUser } from '@goalie/nextjs'
 import { Form, messageSuccess } from '@shared/ui'
 import { HiOutlineDuplicate } from 'react-icons/hi'
 import { copyToClipboard } from '@shared/libs'
+import { useGetParams } from '@/hooks/useGetParams'
 
 export default function MeetingContainer() {
   // TODO: get user input for room and name
-  const { roomId, orgName } = useParams()
+  const { roomId } = useParams()
+  const { orgName } = useGetParams()
   const { push } = useRouter()
   const { user } = useUser()
   const [token, setToken] = useState('')

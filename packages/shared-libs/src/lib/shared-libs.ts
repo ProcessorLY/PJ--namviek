@@ -1,4 +1,5 @@
 import diff from "fast-diff";
+import slugify from "slugify";
 export function sharedLibs(): string {
   return 'shared-libs';
 }
@@ -43,5 +44,12 @@ export function diffText(oldText: string, newText: string) {
   return highlight.join('')
 }
 
+export const generateSlug = (name: string) => {
+  return slugify(name, {
+    replacement: '-',
+    lower: true,
+    trim: true
+  })
+}
 
 

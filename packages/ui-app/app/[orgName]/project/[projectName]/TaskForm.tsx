@@ -5,7 +5,7 @@ import StatusSelect from '@/components/StatusSelect'
 import { TaskPriority, TaskStatus, TaskType } from '@prisma/client'
 import { useFormik } from 'formik'
 import { validateTask } from '@shared/validation'
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 import { useEffect, useState, useRef } from 'react'
 import { useProjectStatusStore } from 'packages/ui-app/store/status'
 import FileControl from '@/components/FileKits/FileControl'
@@ -58,7 +58,7 @@ export default function TaskForm({
   onSubmit,
   defaultValue = defaultFormikValues
 }: ITaskFormProps) {
-  const params = useParams()
+  const { projectId } = useGetParams()
   const [loading, setLoading] = useState(false)
   const { statuses } = useProjectStatusStore()
   const refDefaultValue = useRef<ITaskDefaultValues>(defaultValue)
@@ -75,13 +75,14 @@ export default function TaskForm({
   const formik = useFormik({
     initialValues: refDefaultValue.current,
     onSubmit: values => {
+      if (!projectId) return
       if (loading) {
         messageWarning('Server is processing')
         return
       }
 
       setLoading(true)
-      const mergedValues = { ...values, projectId: params.projectId }
+      const mergedValues = { ...values, projectId }
       if (!Array.isArray(mergedValues.assigneeIds)) {
         mergedValues.assigneeIds = [mergedValues.assigneeIds]
       }
@@ -155,11 +156,16 @@ export default function TaskForm({
           {/* {isUpdate ? <Activity /> : null} */}
         </div>
         <div
-          className={`task-form-right-actions space-y-3 ${isCreate ? 'w-full' : 'sm:w-[200px]'
-            }  shrink-0`}>
-          <TaskTypeSelect value={formik.values.type} onChange={val => {
-            formik.setFieldValue('type', val)
-          }} title="Task types" />
+          className={`task-form-right-actions space-y-3 ${
+            isCreate ? 'w-full' : 'sm:w-[200px]'
+          }  shrink-0`}>
+          <TaskTypeSelect
+            value={formik.values.type}
+            onChange={val => {
+              formik.setFieldValue('type', val)
+            }}
+            title="Task types"
+          />
           <MemberPicker
             title="Assignees"
             value={formik.values.assigneeIds[0]}

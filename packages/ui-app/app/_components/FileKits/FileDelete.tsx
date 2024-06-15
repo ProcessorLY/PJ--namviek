@@ -11,7 +11,7 @@ export default function FileDelete({ id }: { id: string }) {
 
   const { user } = useUser()
   const { updateTask } = useTaskStore()
-  const { projectId } = useParams()
+  const { projectId } = useGetParams()
   const { orgId } = useGetParams()
   // const sp = useSearchParams()
   // const taskId = sp.get('taskId')
@@ -44,7 +44,7 @@ export default function FileDelete({ id }: { id: string }) {
       }
     })
 
-    if (orgId) {
+    if (orgId && projectId) {
       storageDelFile({
         id,
         orgId,

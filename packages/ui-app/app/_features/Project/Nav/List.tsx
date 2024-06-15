@@ -14,6 +14,7 @@ import { AiOutlinePlus } from 'react-icons/ai'
 import ProjectAddModal from '@/features/Project/Add/ProjectAddModal'
 import { useMemo } from 'react'
 import { useMenuStore } from '@/store/menu'
+import { useGetParams } from '@/hooks/useGetParams'
 
 function ViewAllBtn() {
   return (
@@ -124,10 +125,10 @@ function ProjectNavListContainer({ orgName }: { orgName: string }) {
 
 
 export default function ProjectNavList() {
-  const { orgName } = useParams()
+  const { orgName } = useGetParams()
 
   const view = useMemo(() => {
-    return <ProjectNavListContainer orgName={orgName} />
+    return orgName && <ProjectNavListContainer orgName={orgName} />
   }, [orgName])
 
   return <>{view}</>

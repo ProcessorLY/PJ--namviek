@@ -8,7 +8,7 @@ import {
   VisionProvider
 } from './context'
 import { visionGetByProject } from '@/services/vision'
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 import VisionContainer from './VisionContainer'
 import './style.css'
 import { Vision } from '@prisma/client'
@@ -75,7 +75,7 @@ const useVisionProgress = ({ visions }: { visions: VisionField[] }) => {
 
 export default function ProjectVision() {
   const [mode, setMode] = useState(EVisionViewMode.CALENDAR)
-  const { projectId } = useParams()
+  const { projectId } = useGetParams()
   const [loading, setLoading] = useState(true)
   const [selected, setSelected] = useState('')
   const [visions, setVisions] = useState<VisionField[]>([])

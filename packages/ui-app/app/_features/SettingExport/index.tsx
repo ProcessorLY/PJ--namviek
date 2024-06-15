@@ -11,7 +11,7 @@ import { Task, TaskType } from '@prisma/client'
 import { format } from 'date-fns'
 import { useOrgMemberStore } from '@/store/orgMember'
 import { useOrgMemberGet } from '@/services/organizationMember'
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 import Link from 'next/link'
 
 export interface ITaskExport {
@@ -42,7 +42,7 @@ export default function SettingExport() {
   const { projects } = useProjectStore()
   const { orgMembers } = useOrgMemberStore()
   const { filter } = useExportFilter()
-  const { orgName } = useParams()
+  const { orgName } = useGetParams()
   useOrgMemberGet()
 
   const getDueDate = ({

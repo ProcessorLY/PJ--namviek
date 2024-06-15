@@ -7,7 +7,6 @@ import {
   mdOrgMemGetByUid,
   mdOrgUpdate,
   mdOrgGetOneBySlug,
-  generateSlug,
 } from '@shared/models'
 import {
   BaseController,
@@ -28,6 +27,7 @@ import {
 } from '@prisma/client'
 import { MAX_STORAGE_SIZE } from '../storage'
 import { isProdMode } from '../../lib/utils'
+import { generateSlug } from '@shared/libs'
 // import { Log } from '../../lib/log'
 
 @Controller('/org')
@@ -99,7 +99,7 @@ export class OrganizationController extends BaseController {
         throw new Error('REACHED_MAX_ORGANIZATION')
       }
 
-      const slug = generateSlug(body.name.toLowerCase().trim())
+      const slug = generateSlug(body.name)
 
       const result = await mdOrgAdd({
         name: body.name,

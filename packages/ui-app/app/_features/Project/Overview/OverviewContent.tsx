@@ -2,7 +2,7 @@ import './style.css'
 import { useUser } from '@goalie/nextjs'
 import { Button } from '@shared/ui'
 import { dboardCreate } from '@/services/dashboard'
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 import DashboardComponentCreate from '../../Dashboard/DasboardComponentCreate'
 import DboardComponentList from '../../Dashboard/DboardComponentList'
 import { useOverviewContext } from './context'
@@ -11,13 +11,13 @@ import { LoadingSpinnerIcon } from 'packages/shared-ui/src/components/Loading/Ic
 
 export default function OverviewContent() {
   const { user } = useUser()
-  const { projectId } = useParams()
+  const { projectId } = useGetParams()
 
   const { loading, setLoading, dboardId, setDboardId } = useOverviewContext()
 
   const onCreateDashboard = () => {
     setLoading(true)
-    dboardCreate({
+    projectId && dboardCreate({
       projectId,
       title: 'Overview dashboard',
       isDefault: true

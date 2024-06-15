@@ -1,12 +1,12 @@
 import { useDebounce } from '@/hooks/useDebounce'
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 import {
   useProjectViewList,
   useProjectViewListHandler
 } from '../ProjectView/useProjectViewList'
 
 export const useGetProjectViewList = () => {
-  const { projectId } = useParams()
+  const { projectId } = useGetParams()
   const { setLoading } = useProjectViewList()
   const { fetchNCache } = useProjectViewListHandler(projectId, () => {
     setLoading(false)

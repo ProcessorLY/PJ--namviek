@@ -5,10 +5,10 @@ import MemberPicker from '@/components/MemberPicker'
 import PrioritySelect from '@/components/PrioritySelect'
 import ListPreset from '@/components/ListPreset'
 import { Form } from '@shared/ui'
-// import TaskForm from '../../[orgID]/project/[projectId]/TaskForm'
+// import TaskForm from '../../[orgID]/project/[projectName]/TaskForm'
 
 const DynamicTaskForm = dynamic(
-  () => import('../../[orgName]/project/[projectId]/TaskForm'),
+  () => import('../../[orgName]/project/[projectName]/TaskForm'),
   {
     loading: () => <p>Loading ...</p>
   }

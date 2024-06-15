@@ -5,10 +5,10 @@ import { DateRange } from 'react-day-picker'
 import OverviewContent from './OverviewContent'
 import { DashboardComponent } from '@prisma/client'
 import { dboardGet, dboardGetComponents } from '@/services/dashboard'
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 
 export default function ProjectOverview() {
-  const { projectId } = useParams()
+  const { projectId } = useGetParams()
 
   const [loading, setLoading] = useState(false)
   const [dboardId, setDboardId] = useState('')

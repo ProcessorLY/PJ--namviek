@@ -4,7 +4,7 @@ import { useProjectStatusStore } from '@/store/status'
 import { useTaskStore } from '@/store/task'
 import { TaskPriority } from '@prisma/client'
 import { getLastDateOfMonth } from '@shared/libs'
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 
 import {
   createContext,
@@ -134,7 +134,7 @@ export const useTaskFilter = () => {
   const { statuses } = useProjectStatusStore()
   const { members } = useMemberStore()
   const { tasks } = useTaskStore()
-  const { projectId } = useParams()
+  const { projectId } = useGetParams()
 
   const oldGroupByType = useRef('')
   const oldStatusList = useRef(statuses)

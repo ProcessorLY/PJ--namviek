@@ -8,10 +8,10 @@ import { AutomateProvider, THEN, WHEN } from './context'
 import AutomateCreate from './AutomateCreate'
 import { IAutomateThenProps, IAutomateWhenProps } from '@/store/automation'
 import Link from 'next/link'
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 
 export default function Automation() {
-  const { projectId, orgName } = useParams()
+  const { orgName, projectId } = useGetParams()
   const [when, setWhen] = useState<IAutomateWhenProps>({
     happens: 'task',
     is: WHEN.PROGRESS_CHANGED,

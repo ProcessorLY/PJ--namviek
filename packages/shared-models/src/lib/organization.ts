@@ -74,10 +74,3 @@ export const mdOrgMemAddMany = async (data: Omit<OrganizationMembers, 'id'>[]) =
   });
 };
 
-export const generateSlug = (name: string) => {
-  return slugify(name, {
-    replacement: '-',
-    lower: false,
-    trim: true
-  })
-}

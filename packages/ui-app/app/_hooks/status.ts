@@ -1,10 +1,10 @@
 import { KeyboardEvent, RefObject } from 'react'
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 import { TaskStatus } from '.prisma/client'
 import { projectStatusAdd } from 'packages/ui-app/services/status'
 import { messageError, messageSuccess, randomId } from '@shared/ui'
 import { useProjectStatusStore } from 'packages/ui-app/store/status'
-import { DEFAULT_COLOR } from '../[orgName]/project/[projectId]/settings/status/type'
+import { DEFAULT_COLOR } from '../[orgName]/project/[projectName]/settings/status/type'
 import { StatusType } from '@prisma/client'
 
 interface Props {
@@ -13,7 +13,7 @@ interface Props {
 
 export const useStatus = ({ currentColor }: Props) => {
   const { statuses, updateStatus, addStatus } = useProjectStatusStore()
-  const params = useParams()
+  const { projectId } = useGetParams()
 
   const updateStatusToServer = (fakeId: string, newTaskStatus: TaskStatus) => {
     projectStatusAdd(newTaskStatus)
@@ -49,7 +49,8 @@ export const useStatus = ({ currentColor }: Props) => {
       return
     }
 
-    const projectId = params.projectId
+    if (!projectId) return
+    
     const fakeId = randomId()
     const order = statuses.length
     const newTaskStatus: TaskStatus = {

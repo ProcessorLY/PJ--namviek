@@ -24,6 +24,8 @@ import StatusRouter from './status'
 import TagRouter from './tag'
 import PinRouter from './pin'
 import { pmClient } from 'packages/shared-models/src/lib/_prisma'
+import { generateSlug } from '@shared/libs'
+import { Body } from '../../core'
 
 const router = Router()
 
@@ -110,6 +112,7 @@ router.post('/project', async (req: AuthRequest, res) => {
         data: {
           cover: null,
           icon: body.icon || '',
+          slug: generateSlug(body.name),
           projectViewId: null,
           name: body.name,
           desc: body.desc,
@@ -405,6 +408,7 @@ router.put('/project', async (req: AuthRequest, res) => {
 
   if (name) {
     updateData.name = name
+    updateData.slug = generateSlug(name)
   }
 
   if (desc) {

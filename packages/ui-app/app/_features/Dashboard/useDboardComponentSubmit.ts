@@ -4,7 +4,7 @@ import { useOverviewContext } from '../Project/Overview/context'
 import { DashboardComponentType, Task, TaskPriority } from '@prisma/client'
 import { startOfWeek, endOfWeek, startOfMonth, endOfMonth } from 'date-fns'
 import { messageError, messageWarning } from '@shared/ui'
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 import { useFormik } from 'formik'
 import { useTaskStore } from '@/store/task'
 import { taskGetByCond } from '@/services/task'
@@ -42,7 +42,7 @@ export const useDboardComponentSubmit = ({
   type,
   onSuccess
 }: UseDboardComponentProps) => {
-  const { projectId } = useParams()
+  const { projectId } = useGetParams()
   const { tasks } = useTaskStore()
   const { setComponents, dboardId } = useOverviewContext()
   const [sending, setSending] = useState(false)

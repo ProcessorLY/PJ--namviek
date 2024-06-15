@@ -2,33 +2,33 @@ import { useTaskStore } from '@/store/task'
 import { useVisionContext } from './context'
 import ListBoxCreate from '@/components/ListBox/ListBoxCreate'
 import { useServiceTaskAdd } from '@/hooks/useServiceTaskAdd'
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 import { HiOutlineChevronLeft } from 'react-icons/hi2'
 import { Button, Scrollbar } from '@shared/ui'
 import { useEffect, useState } from 'react'
 import VisionTaskItemDraggable from './VisionTaskItemDraggable'
 import StatusSelectMultiple from '@/components/StatusSelectMultiple'
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion'
 import { HiOutlineX } from 'react-icons/hi'
 
 function VisionTaskCounter({ total, onHide }: { total: number, onHide: () => void }) {
   return <motion.div
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 100 }}
-    className="w-[30px] border-r dark:border-gray-700 h-full bg-white dark:bg-gray-900 cursor-pointer"
-    onClick={onHide}>
-    <div className="whitespace-nowrap uppercase text-[11px] font-bold text-gray-600 dark:text-gray-500 transform rotate-90 translate-y-5">
-      show task list:{' '}
-      <span className="px-1 py-0.5 w-5 rounded-md border dark:border-gray-700">
-        {total}
-      </span>
-    </div>
-  </motion.div>
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 100 }}
+      className="w-[30px] border-r dark:border-gray-700 h-full bg-white dark:bg-gray-900 cursor-pointer"
+      onClick={onHide}>
+      <div className="whitespace-nowrap uppercase text-[11px] font-bold text-gray-600 dark:text-gray-500 transform rotate-90 translate-y-5">
+        show task list:{' '}
+        <span className="px-1 py-0.5 w-5 rounded-md border dark:border-gray-700">
+          {total}
+        </span>
+      </div>
+    </motion.div>
 }
 
 export default function VisionListTask() {
   const [hide, setHide] = useState(true)
-  const { projectId } = useParams()
+  const { projectId } = useGetParams()
   const { selected, setSelected } = useVisionContext()
   const { tasks, taskLoading } = useTaskStore()
   const [statusIds, setStatusIds] = useState(['ALL'])
@@ -52,7 +52,7 @@ export default function VisionListTask() {
       return
     }
 
-    taskCreateOne({
+    projectId && taskCreateOne({
       dueDate: new Date(),
       title: v,
       projectId,
@@ -80,7 +80,7 @@ export default function VisionListTask() {
       <div className="">
         <div className="flex px-3 border-b dark:border-gray-700 pb-3 items-center gap-2 justify-between">
           <StatusSelectMultiple noName={true} onChange={val => {
-            setStatusIds(val)
+              setStatusIds(val)
           }} value={statusIds} />
           <Button
             onClick={() => {

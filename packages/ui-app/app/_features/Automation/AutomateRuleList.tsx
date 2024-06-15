@@ -1,12 +1,12 @@
 import { useAutomationStore } from '@/store/automation'
 import { Button } from '@shared/ui'
 import Link from 'next/link'
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 import { HiOutlinePlus } from 'react-icons/hi2'
 import AutomateDesc from './AutomateDesc'
 
 export default function AutomateRuleList() {
-  const { orgName, projectId } = useParams()
+  const { orgName, projectId } = useGetParams()
   const { automations } = useAutomationStore()
 
   return (

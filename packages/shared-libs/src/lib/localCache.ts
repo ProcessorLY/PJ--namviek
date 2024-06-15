@@ -19,6 +19,7 @@ export const setLocalJSONCache = (name: LCK | string, value: string) => {
 }
 
 export const getLocalCache = (name: LCK | string) => {
+  console.log('name --->', name)
   try {
     return localStorage.getItem(name)
   } catch (error) {

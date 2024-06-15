@@ -1,11 +1,11 @@
 import { orgGetBySlug } from '@/services/organization'
 import { getLocalCache, setLocalCache } from '@shared/libs'
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 import { useEffect, useState } from 'react'
 
 export const useOrgIdBySlug = () => {
   const [orgId, setOrgId] = useState<string>()
-  const { orgName } = useParams()
+  const { orgName } = useGetParams()
 
   useEffect(() => {
     const orgId = getLocalCache('ORG_ID')
@@ -14,7 +14,7 @@ export const useOrgIdBySlug = () => {
       return
     }
     
-    orgGetBySlug(orgName).then(res => {
+    orgName && orgGetBySlug(orgName).then(res => {
       const { data } = res.data
       
       setLocalCache('ORG_ID', data.id)

@@ -1,11 +1,11 @@
 import { useServiceTaskDel } from '@/hooks/useServiceTaskDel'
 import { Button, confirmAlert } from '@shared/ui'
 import localforage from 'localforage'
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 import { HiOutlineTrash } from 'react-icons/hi2'
 
 export default function TaskDeleteAction({ id }: { id: string }) {
-  const { projectId } = useParams()
+  const { projectId } = useGetParams()
   const { deleteTask } = useServiceTaskDel()
   const onDelete = () => {
     confirmAlert({

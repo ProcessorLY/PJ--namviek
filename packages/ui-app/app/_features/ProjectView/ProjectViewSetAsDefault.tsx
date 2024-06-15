@@ -1,3 +1,4 @@
+import { useGetParams } from "@/hooks/useGetParams";
 import { projectView } from "@/services/projectView";
 import useServiceProject from "@/services/useServiceProject";
 import { useProjectViewStore } from "@/store/projectView";
@@ -9,7 +10,7 @@ import { PiAnchorBold } from "react-icons/pi";
 export default function ProjectViewSetAsDefault({ id }: { id: string }) {
   const { deleteView } = useProjectViewStore()
   const { projectDataUpdate } = useServiceProject()
-  const { projectId } = useParams()
+  const { projectId } = useGetParams()
 
   const setAsDefaultView = () => {
     if (!projectId) return
@@ -21,8 +22,8 @@ export default function ProjectViewSetAsDefault({ id }: { id: string }) {
 
   }
   return <DropdownMenu.Item
-    onClick={setAsDefaultView}
-    icon={<PiAnchorBold />}
+      onClick={setAsDefaultView}
+      icon={<PiAnchorBold />}
     title='Set as default'
-  />
+    />
 }

@@ -7,12 +7,13 @@ import { useBoardItemReorder } from './useBoardItemReorder'
 import { serviceTask } from '@/services/task'
 import { useUrl } from '@/hooks/useUrl'
 import useTaskFilterContext from '@/features/TaskFilter/useTaskFilterContext'
+import { useGetParams } from '@/hooks/useGetParams'
 
 export const useBoardDndAction = () => {
   const { moveTaskToAnotherGroup, rearrangeColumn } = useBoardAction()
   const { setGroupbyItems } = useTaskFilterContext()
   const { reorderTask } = useBoardItemReorder()
-  const { projectId } = useUrl()
+  const { projectId } = useGetParams()
 
   const moveItemByIndex = ({
     column,
@@ -75,6 +76,7 @@ export const useBoardDndAction = () => {
 
         syncServerDataAsWell &&
           updatedTaskItems &&
+          projectId &&
           serviceTask
             .reorder({ updatedOrder: updatedTaskItems, projectId })
             .then(res => {

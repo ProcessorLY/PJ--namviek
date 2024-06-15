@@ -1,14 +1,14 @@
 import { useProjectViewStore } from "@/store/projectView";
 import { ProjectView } from "@prisma/client";
 import localforage from "localforage";
-import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import { projectViewMap } from "../ProjectView/useProjectViewList";
 import { useReRenderView } from "../ProjectView/useReRenderView";
+import { useGetParams } from "@/hooks/useGetParams";
 
 export default function useSetProjectViewCache() {
   const { addAllView } = useProjectViewStore()
-  const { projectId } = useParams()
+  const { projectId } = useGetParams()
   const { doReRender } = useReRenderView()
   const key = `PROJECT_VIEW_${projectId}`
 

@@ -6,7 +6,7 @@ import { useTaskStore } from '@/store/task'
 import { taskAdd } from '@/services/task'
 import { Task, TaskPriority } from '@prisma/client'
 import { useTaskFilter } from '@/features/TaskFilter/context'
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 import useTaskFilterContext from '@/features/TaskFilter/useTaskFilterContext'
 
 export const BoardActionCreateTaskWithIcon = ({
@@ -93,7 +93,7 @@ export const BoardActionCreateTask = ({ groupId }: { groupId: string }) => {
   const { isGroupbyPriority, isGroupbyAssignee, isGroupbyStatus } =
     useTaskFilterContext()
   const [visible, setVisible] = useState(false)
-  const { projectId } = useParams()
+  const { projectId } = useGetParams()
   const { handleSubmit } = useHandleSubmit(() => {
     // setVisible(false)
   })

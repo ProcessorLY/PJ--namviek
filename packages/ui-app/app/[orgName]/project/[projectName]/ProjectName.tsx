@@ -1,4 +1,4 @@
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 
 export default function ProjectName() {
   const { orgID } = useParams()

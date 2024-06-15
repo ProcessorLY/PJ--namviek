@@ -5,7 +5,7 @@ import { useProjectViewStore } from '@/store/projectView'
 import { ProjectView, ProjectViewType } from '@prisma/client'
 import { getLocalCache, setLocalCache } from '@shared/libs'
 import localforage from 'localforage'
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 type TCurrentViewType = ProjectViewType | ''
@@ -13,13 +13,14 @@ type TCurrentViewType = ProjectViewType | ''
 export const projectViewMap = new Map<string, TCurrentViewType>()
 
 export const useProjectViewListHandler = (
-  projectId: string,
+  projectId?: string,
   cb?: () => void
 ) => {
   const { addAllView } = useProjectViewStore()
   const key = `PROJECT_VIEW_${projectId}`
   const fetchNCache = () => {
     const controller = new AbortController()
+    if (!projectId) return
 
     projectView
       .get(projectId, controller.signal)
@@ -56,7 +57,7 @@ export const useProjectViewListHandler = (
 
 export const useProjectViewList = () => {
   const { getSp } = useUrl()
-  const { projectId } = useParams()
+  const { projectId } = useGetParams()
   const { views } = useProjectViewStore()
   const [loading, setLoading] = useState(true)
   const oldMode = useRef('')

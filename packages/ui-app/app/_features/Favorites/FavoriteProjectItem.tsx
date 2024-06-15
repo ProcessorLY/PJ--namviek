@@ -16,7 +16,7 @@ export default function FavoriteProjectItem({
 }) {
   const { setVisible: setMenuVisible } = useMenuStore()
   const { push } = useRouter()
-  const { projectId } = useParams()
+  const { projectId } = useGetParams()
   const { selectProject } = useProjectStore()
   const { url } = useUrl()
   const { link, id, icon, name } = data

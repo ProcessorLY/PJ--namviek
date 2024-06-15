@@ -3,8 +3,7 @@ import { useProjectArchiveStore } from '@/store/projecArchived'
 import { useProjectStore } from '@/store/project'
 import { Project } from '@prisma/client'
 import { messageError, messageSuccess } from '@shared/ui'
-import { useParams } from 'next/navigation'
-import { useGetParams } from './useGetParams'
+import { useGetParams } from '@/hooks/useGetParams'
 
 export default function useServiceProjectArchive() {
   const {

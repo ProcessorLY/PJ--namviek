@@ -2,7 +2,7 @@ import { projectStatusGet } from '@/services/status'
 import { useProjectStatusStore } from '@/store/status'
 import { TaskStatus } from '@prisma/client'
 import localforage from 'localforage'
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 import { useEffect } from 'react'
 
 export const useGetStatusHandler = (projectId: string, cb?: () => void) => {
@@ -50,9 +50,9 @@ export const useGetStatusHandler = (projectId: string, cb?: () => void) => {
 }
 
 export default function useGetProjectStatus() {
-  const { projectId } = useParams()
+  const { projectId } = useGetParams()
   const { addAllStatuses } = useProjectStatusStore()
-  const { fetchNCache } = useGetStatusHandler(projectId)
+  const { fetchNCache } = useGetStatusHandler(projectId as string)
 
   const key = `PROJECT_STATUS_${projectId}`
 

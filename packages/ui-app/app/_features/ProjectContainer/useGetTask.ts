@@ -2,7 +2,7 @@ import { useCallback, useEffect } from 'react'
 import { extractDueDate } from '@shared/libs'
 import { ExtendedTask, useTaskStore } from '@/store/task'
 import { taskGetByCond } from '@/services/task'
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 import { messageError } from '@shared/ui'
 import localforage from 'localforage'
 import useTaskFilterContext from '../TaskFilter/useTaskFilterContext'
@@ -15,7 +15,7 @@ const getAssigneeIds = (assigneeIds: string[]) => {
 }
 
 export const useGetTaskHandler = () => {
-  const { projectId } = useParams()
+  const { projectId } = useGetParams()
   const { addAllTasks, setTaskLoading } = useTaskStore()
   const { filter } = useTaskFilterContext()
   const { groupBy, status, statusIds, ...filterWithoutGroupBy } = filter
@@ -45,7 +45,7 @@ export const useGetTaskHandler = () => {
 
     setTaskLoading(true)
 
-    taskGetByCond(
+    projectId && taskGetByCond(
       {
         title: term || undefined,
         taskPoint: +point === -1 ? undefined : +point,
@@ -89,7 +89,7 @@ export const useGetTaskHandler = () => {
 }
 
 function useFillTaskFromCache() {
-  const { projectId } = useParams()
+  const { projectId } = useGetParams()
   const { addAllTasks } = useTaskStore()
   const key = `TASKLIST_${projectId}`
 

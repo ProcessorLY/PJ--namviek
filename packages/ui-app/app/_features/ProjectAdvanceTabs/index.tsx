@@ -1,20 +1,21 @@
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import HasRole from "../UserPermission/HasRole";
 import { HiOutlineCog6Tooth, HiOutlineCpuChip } from "react-icons/hi2";
+import { useGetParams } from "@/hooks/useGetParams";
 
 export default function ProjectAdvanceTabs() {
   const searchParams = useSearchParams()
   const { push } = useRouter()
-  const params = useParams()
+  const { projectName, orgName } = useGetParams()
   const mode = searchParams.get('mode')
 
 
   const onMoveTab = (name: string) => {
-    push(`${params.orgName}/project/${params.projectId}?mode=${name}`)
+    push(`${orgName}/project/${projectName}?mode=${name}`)
   }
 
   const onMoveTabAdvance = (name: string, tab: string) => {
-    push(`${params.orgName}/project/${params.projectId}?mode=${name}&tab=${tab}`)
+    push(`${orgName}/project/${projectName}?mode=${name}&tab=${tab}`)
   }
 
   return <div className="project-advance-tabs flex items-center gap-2">

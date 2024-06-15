@@ -188,6 +188,6 @@ export const TaskUpdate2 = () => {
     setVisible={() => {
       // closeTaskDetail()
       deleteState('taskId')
-      // router.replace(`${orgID}/project/${projectId}?mode=${mode}`)
+      // router.replace(`${orgID}/project/${projectName}?mode=${mode}`)
     }} />
 }

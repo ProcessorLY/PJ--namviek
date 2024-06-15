@@ -8,10 +8,11 @@ import AutomateRuleList from './AutomateRuleList'
 import { useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { useUrl } from '@/hooks/useUrl'
+import { useGetParams } from '@/hooks/useGetParams'
 
 export default function AutomateMenu() {
   const { push } = useRouter()
-  const { orgName, projectId } = useParams()
+  const { orgName, projectId } = useGetParams()
   const { getSp } = useUrl()
   const tab = getSp('tab')
 

@@ -2,7 +2,7 @@ import { ETaskFilterGroupByType } from '@/features/TaskFilter/context'
 import useOutsideClick from '@/hooks/useOutsideClick'
 import { useServiceTaskAdd } from '@/hooks/useServiceTaskAdd'
 import { Task, TaskPriority } from '@prisma/client'
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 import { useEffect, useRef, useState, KeyboardEvent } from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
 
@@ -18,7 +18,7 @@ export default function ListCreateTask({
   const [visible, setVisible] = useState(false)
   const ref = useRef<HTMLInputElement>(null)
   const { taskCreateOne } = useServiceTaskAdd()
-  const { projectId } = useParams()
+  const { projectId } = useGetParams()
 
   const handleClickOutside = () => {
     if (visible) {
@@ -47,7 +47,7 @@ export default function ListCreateTask({
       return
     }
 
-    if (key !== 'Enter') return
+    if (key !== 'Enter' || !projectId) return
 
     const value = target.value
 

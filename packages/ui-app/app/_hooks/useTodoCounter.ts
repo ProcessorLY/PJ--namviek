@@ -3,7 +3,6 @@ import { useDebounce } from './useDebounce'
 import { useProjectStore } from '@/store/project'
 import { taskCounterByUser } from '@/services/task'
 import localforage from 'localforage'
-import { useParams } from 'next/navigation'
 import { useGetParams } from './useGetParams'
 
 interface ITodoCounter {

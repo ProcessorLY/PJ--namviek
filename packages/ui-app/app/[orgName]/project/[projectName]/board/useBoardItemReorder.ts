@@ -3,15 +3,11 @@ import {
   taskIdMap,
   updateTaskOrderInMap
 } from '@/hooks/useGenTaskMappingObject'
+import { useGetParams } from '@/hooks/useGetParams'
 import localforage from 'localforage'
-import { useParams } from 'next/navigation'
-
 
 export const useBoardItemReorder = () => {
-  const { projectId } = useParams()
-
-
-
+  const { projectId } = useGetParams()
   const getUpdatedTaskOrderItem = ({
     isMovedUp,
     initialColumn,

@@ -8,6 +8,7 @@ import ProjectViewItemDropdown from './ProjectViewItemDropdown'
 import DynamicIcon from '@/components/DynamicIcon'
 import { Loading } from '@shared/ui'
 import { HiOutlineEye } from 'react-icons/hi2'
+import { useGetParams } from '@/hooks/useGetParams'
 
 function OnlyMeIcon({ enabled }: { enabled: boolean }) {
   if (!enabled) return null
@@ -17,12 +18,12 @@ function OnlyMeIcon({ enabled }: { enabled: boolean }) {
 export default function ProjectViewList({ onUpdate }: { onUpdate: (id: string) => void }) {
   const searchParams = useSearchParams()
   const { push } = useRouter()
-  const params = useParams()
+  const { projectId, orgName } = useGetParams()
   const mode = searchParams.get('mode')
   const { views } = useProjectViewList()
 
   const clickOnView = (name: string) => {
-    push(`${params.orgName}/project/${params.projectId}?mode=${name}`)
+    push(`${orgName}/project/${projectId}?mode=${name}`)
   }
 
   return (

@@ -5,7 +5,7 @@ import { useProjectViewListHandler } from '@/features/ProjectView/useProjectView
 
 // @description
 // it will be ran as an user create / delete / update a view
-export const useEventSyncProjectView = (projectId: string) => {
+export const useEventSyncProjectView = (projectId?: string) => {
   const { user } = useUser()
   const { channelTeamCollab } = usePusher()
   const { fetchNCache } = useProjectViewListHandler(projectId)

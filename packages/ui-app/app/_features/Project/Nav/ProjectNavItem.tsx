@@ -1,18 +1,18 @@
 import { useProjectStore } from '@/store/project'
-import { useParams, usePathname, useRouter } from 'next/navigation'
-import { HiChevronRight } from 'react-icons/hi2'
 import ProjectPin from '../Pin'
 import { useEffect, useState } from 'react'
 import { useMenuStore } from '@/store/menu'
 import Badge from '@/components/Badge'
 import Tooltip from 'packages/shared-ui/src/components/Tooltip'
-import { useProjectViewStore } from '@/store/projectView'
 import { useTaskStore } from '@/store/task'
-import { GoDot, GoDotFill } from 'react-icons/go'
+import { GoDot } from 'react-icons/go'
+import { useGetParams } from '@/hooks/useGetParams'
+import { useRouter } from 'next/navigation'
 
 export default function ProjectNavItem({
   pinned = false,
   id,
+  projectName,
   view,
   name,
   badge,
@@ -21,18 +21,17 @@ export default function ProjectNavItem({
   pinned?: boolean
   badge?: number
   id: string
+  projectName: string
   view: string
   name: string
   icon: string
 }) {
   const [visible, setVisible] = useState(false)
   const { setVisible: setMenuVisible } = useMenuStore()
-  const { setLoading: setProjectViewLoading } = useProjectViewStore()
-  const params = useParams()
-  const pathName = usePathname()
+  const { orgName, projectId } = useGetParams()
   const { push } = useRouter()
-  const active = params.projectId === id
-  const href = `${params.orgName}/project/${id}?mode=${view}`
+  const active = projectId === id
+  const href = `${orgName}/project/${projectName}?mode=${view}`
   const { selectProject } = useProjectStore(state => state)
   const { addAllTasks } = useTaskStore()
   const onSelectProject = (id: string) => {
@@ -46,15 +45,12 @@ export default function ProjectNavItem({
   }, [])
 
   const onSelectItem = (link: string) => {
-    const p = `${params.orgName}/project/${id}`
-
-    if (!pathName.includes(p)) {
-      // setProjectViewLoading(true)
-    }
     addAllTasks([])
 
     onSelectProject(id)
     setMenuVisible(false)
+    localStorage.setItem('PROJECT_ID', id)
+    localStorage.setItem('PROJECT_SLUG_NAME', projectName)
     push(link)
   }
 

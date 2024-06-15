@@ -1,6 +1,6 @@
 import { InvitationStatus, Organization, OrganizationRole } from "@prisma/client"
 import { pmClient } from "../../lib/_prisma"
-import { generateSlug } from "../../lib"
+import { generateSlug } from "@shared/libs"
 
 const MAX_STORAGE_SIZE = 100 * 1024 * 1024 // 100Mb
 
@@ -49,7 +49,7 @@ export const createOrganization = async (body: {
 
 }
 
-export const updateAllSlug = async () => {
+export const updateAllOrgSlug = async () => {
   const orgs = await pmClient.organization.findMany({
     select: {
       id: true,
@@ -60,7 +60,7 @@ export const updateAllSlug = async () => {
   const promises = []
   for (const org of orgs) {
     const { id, name } = org
-    const slug = generateSlug(name.toLowerCase())
+    const slug = generateSlug(name)
 
     promises.push(updateOrganization(id, { name, slug }))
   }

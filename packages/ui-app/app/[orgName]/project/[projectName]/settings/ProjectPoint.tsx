@@ -1,4 +1,4 @@
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 import { TaskPoint } from '@prisma/client'
 import { AiOutlinePlus, AiOutlineStar } from 'react-icons/ai'
 
@@ -70,7 +70,7 @@ export default function ProjectPoint() {
   const [taskPointList, setTaskPointList] = useState<TaskPoint[]>([])
   const inputAddRef = useRef<HTMLInputElement>(null)
   const { points, addPoint, updatePoint, deletePoint } = useProjectPointStore()
-  const { projectId } = useParams()
+  const { projectId } = useGetParams();
 
   const { projectRole } = useUserRole()
 

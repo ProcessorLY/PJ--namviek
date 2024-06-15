@@ -2,7 +2,7 @@ import { getProjectMember } from '@/services/member'
 import { UserMember } from '@/store/member'
 import { useMemberStore } from '@/store/member'
 import localforage from 'localforage'
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 import { useEffect } from 'react'
 
 export const useGetMembersHandler = (projectId: string) => {
@@ -36,9 +36,9 @@ export const useGetMembersHandler = (projectId: string) => {
 }
 
 export const useGetMembers = () => {
-  const { projectId } = useParams()
+  const { projectId } = useGetParams()
   const { addAllMember } = useMemberStore()
-  const { fetch } = useGetMembersHandler(projectId)
+  const { fetch } = useGetMembersHandler(projectId as string)
   const key = `PROJECT_MEMBER_${projectId}`
 
   useEffect(() => {

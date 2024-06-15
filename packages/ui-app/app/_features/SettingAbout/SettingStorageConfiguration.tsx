@@ -9,10 +9,9 @@ import {
   messageSuccess
 } from '@shared/ui'
 import { useFormik } from 'formik'
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 import { useEffect, useState } from 'react'
 import { useUserRole } from '../UserPermission/useUserRole'
-import { useGetParams } from '@/hooks/useGetParams'
 
 export default function SettingStorageConfiguration() {
   const { orgRole } = useUserRole()

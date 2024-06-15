@@ -7,16 +7,16 @@ import { AutomateThenPart, AutomateWhenPart } from './AutomateDesc'
 
 export default function AutomateCreate() {
   const { push } = useRouter()
-  const { projectId, orgName } = useParams()
+  const { orgName, projectName, projectId } = useGetParams()
   const { orgId } = useGetParams()
   const { when, then } = useAutomateContext()
   const { addAutomation } = useServiceAutomation()
 
   const onCreate = () => {
-    if (!orgId) return
+    if (!orgId || !projectName) return
 
-    addAutomation({ when, then, projectId, organizationId: orgId })
-    push(`/${orgName}/project/${projectId}?mode=automation`)
+    projectId && addAutomation({ when, then, projectId, organizationId: orgId })
+    push(`/${orgName}/project/${projectName}?mode=automation`)
   }
 
   return (

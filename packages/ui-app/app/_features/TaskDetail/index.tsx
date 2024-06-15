@@ -5,7 +5,7 @@ import StatusSelect from '@/components/StatusSelect'
 import { TaskPriority, TaskStatus, TaskType } from '@prisma/client'
 import { useFormik } from 'formik'
 import { validateTask } from '@shared/validation'
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 import { useEffect, useState, useRef } from 'react'
 import { useProjectStatusStore } from '@/store/status'
 import FileControl from '@/components/FileKits/FileControl'
@@ -78,7 +78,7 @@ export default function TaskDetail({
   onSubmit,
   defaultValue = defaultFormikValues
 }: ITaskFormProps) {
-  const params = useParams()
+  const { projectId } = useGetParams()
   const [loading, setLoading] = useState(false)
   const { statuses } = useProjectStatusStore()
   const refDefaultValue = useRef<ITaskDefaultValues>(defaultValue)
@@ -100,8 +100,10 @@ export default function TaskDetail({
         return
       }
 
+      if (!projectId) return
+
       setLoading(true)
-      const mergedValues = { ...values, projectId: params.projectId }
+      const mergedValues = { ...values, projectId }
       if (!Array.isArray(mergedValues.assigneeIds)) {
         mergedValues.assigneeIds = [mergedValues.assigneeIds]
       }
@@ -170,7 +172,7 @@ export default function TaskDetail({
             }}
             style={{ width: 'calc(100% - 40px)' }}
             className={`cursor-pointer font-bold text-2xl select-none ${titleVisible ? '' : 'hidden'
-              }`}>
+            }`}>
             {formik.values.title}
           </h2>
 

@@ -1,4 +1,4 @@
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 import { useUser } from '@goalie/nextjs'
 import { useTaskStore } from '../../../../../store/task'
 import { taskUpdate } from '../../../../../services/task'
@@ -7,7 +7,7 @@ import { Task } from '@prisma/client'
 
 export const useTaskUpdate = () => {
   const { user } = useUser()
-  const { projectId } = useParams()
+  const { projectId } = useGetParams()
   const { updateTask } = useTaskStore()
 
   const updateLocalTask = (taskData: Partial<Task>) => {
@@ -22,6 +22,8 @@ export const useTaskUpdate = () => {
       messageWarning('Wait! this task still syncing data from server')
       return
     }
+
+    if (!projectId) return
 
     updateTask({
       updatedBy: user?.id,

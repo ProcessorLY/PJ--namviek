@@ -5,7 +5,7 @@ import { useMemberStore } from '@/store/member'
 import { useProjectStatusStore } from '@/store/status'
 import { Row } from 'read-excel-file'
 import { useCallback, useState } from 'react'
-import { useParams } from 'next/navigation'
+import { useGetParams } from '@/hooks/useGetParams'
 import { taskAddMany, taskGetAll } from '@/services/task'
 import { useTaskStore } from '@/store/task'
 
@@ -13,7 +13,7 @@ type ITaskWithoutId = Omit<Task, 'id'>
 
 export default function TaskImportAction() {
   const [loading, setLoading] = useState(false)
-  const { projectId } = useParams()
+  const { projectId } = useGetParams()
   const { members } = useMemberStore()
   const { statuses } = useProjectStatusStore()
   const { tasks, addAllTasks } = useTaskStore()

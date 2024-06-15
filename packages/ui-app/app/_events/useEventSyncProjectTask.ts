@@ -3,15 +3,14 @@ import { usePusher } from './usePusher'
 import { useUser } from '@goalie/nextjs'
 
 import { useGetTaskHandler } from '@/features/ProjectContainer/useGetTask'
-import { messageInfo } from '@shared/ui'
 import { Task } from '@prisma/client'
-import { useTaskUpdate } from '../[orgName]/project/[projectId]/views/useTaskUpdate'
+import { useTaskUpdate } from '../[orgName]/project/[projectName]/views/useTaskUpdate'
 import { useServiceTaskDel } from '@/hooks/useServiceTaskDel'
 import { useServiceTaskAdd } from '@/hooks/useServiceTaskAdd'
 
 // @description
 // it will be ran as an user create / delete / update a view
-export const useEventSyncProjectTask = (projectId: string) => {
+export const useEventSyncProjectTask = (projectId?: string) => {
   const { user } = useUser()
   const { channelTeamCollab } = usePusher()
   const { fetchNCache } = useGetTaskHandler()
