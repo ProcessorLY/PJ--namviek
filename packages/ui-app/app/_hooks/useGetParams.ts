@@ -1,24 +1,21 @@
-import { usePathname, useRouter } from 'next/navigation'
+import { useProjectStore } from '@/store/project'
+import { useRouter } from 'next/navigation'
 
 export const useGetParams = () => {
   const { push } = useRouter()
-  const path = usePathname()
+  const { selectedProject } = useProjectStore()
+  
   let orgId, orgName, projectId, projectName;
-
   if (typeof window !== 'undefined') {
     orgId = localStorage.getItem('ORG_ID');
     orgName = localStorage.getItem('ORG_SLUG_NAME');
-    projectId = localStorage.getItem('PROJECT_ID');
-    projectName = localStorage.getItem('PROJECT_SLUG_NAME');
+    projectId = selectedProject?.id;
+    projectName = selectedProject?.slug;
   }
   
   if (!orgId || !orgName) {
     push('/organization')
   }
-
-  if (path.includes('/project') && (!projectId || !projectName)) {
-    push('/organization')
-  }
-
+  
   return { orgId, orgName, projectId, projectName }
 }

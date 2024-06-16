@@ -14,9 +14,9 @@ export const useSetDefaultCover = () => {
 
 
   const setDefaultCover = (url: string) => {
-    if (!currentTask) return
+    if (!currentTask || !projectId) return
 
-    const { id, cover } = currentTask
+  const { id, cover } = currentTask
 
     // only set default cover image if it's empty
     if (cover) {

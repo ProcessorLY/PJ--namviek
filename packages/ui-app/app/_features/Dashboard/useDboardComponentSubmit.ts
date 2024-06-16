@@ -98,6 +98,8 @@ export const useDboardComponentSubmit = ({
       return
     }
 
+    if (!projectId) return
+
     // merge projectId into submit values
     const mergedValues = { ...values, projectIds: [projectId] }
 

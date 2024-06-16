@@ -69,6 +69,10 @@ export default function ProjectAddForm({
         })
         .catch(err => {
           setFixLoading(false)
+          if (err.response.data === 'DUPLICATE_PROJECT') {
+            setVisible(true)
+            messageError('Duplicate project')
+          }
           console.log('err', err)
         })
     }

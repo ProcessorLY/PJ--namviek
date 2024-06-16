@@ -1,11 +1,12 @@
 import { Favorites } from '@prisma/client'
-import { useParams, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { HiChevronRight } from 'react-icons/hi2'
 import FavoriteRemove from './FavoriteRemove'
 import { useUrl } from '@/hooks/useUrl'
 import { useProjectStore } from '@/store/project'
 import { useEffect } from 'react'
 import { useMenuStore } from '@/store/menu'
+import { useGetParams } from '@/hooks/useGetParams'
 
 export default function FavoriteProjectItem({
   data,
@@ -18,13 +19,12 @@ export default function FavoriteProjectItem({
   const { push } = useRouter()
   const { projectId } = useGetParams()
   const { selectProject } = useProjectStore()
-  const { url } = useUrl()
   const { link, id, icon, name } = data
   // const activeClass = url.includes(link) ? 'active' : ''
   const activeClass = active ? 'active' : ''
 
   useEffect(() => {
-    selectProject(projectId)
+    projectId && selectProject(projectId)
   }, [projectId])
 
   return (

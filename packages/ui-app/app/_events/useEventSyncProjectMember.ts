@@ -7,7 +7,7 @@ import { useGetMembersHandler } from '@/features/ProjectContainer/useGetMembers'
 // @description
 // When a new user is added to project
 // it will auto re-fetch users and update to user store
-export const useEventSyncProjectMember = (projectId: string) => {
+export const useEventSyncProjectMember = (projectId?: string) => {
   const { user } = useUser()
   const { channelTeamCollab } = usePusher()
 

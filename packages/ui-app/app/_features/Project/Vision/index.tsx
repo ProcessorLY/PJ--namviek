@@ -93,6 +93,8 @@ export default function ProjectVision() {
   }
 
   useEffect(() => {
+    if(!projectId) return
+    
     const controller = new AbortController()
     setLoading(true)
     visionGetByProject(projectId, filter, controller.signal)

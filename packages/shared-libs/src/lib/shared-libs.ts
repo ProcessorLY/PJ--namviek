@@ -44,6 +44,15 @@ export function diffText(oldText: string, newText: string) {
   return highlight.join('')
 }
 
+export const generateRandomString = (length: number) => {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return result;
+}
+
 export const generateSlug = (name: string) => {
   return slugify(name, {
     replacement: '-',
@@ -51,5 +60,3 @@ export const generateSlug = (name: string) => {
     trim: true
   })
 }
-
-

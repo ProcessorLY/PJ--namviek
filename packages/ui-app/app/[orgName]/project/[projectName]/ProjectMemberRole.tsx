@@ -1,9 +1,9 @@
 import { MemberRole } from '@prisma/client'
 import { Form, ListItemValue, messageError } from '@shared/ui'
-import { useGetParams } from '@/hooks/useGetParams'
 import { memUpdateRole } from '../../../../services/member'
 import { useMemberStore } from '../../../../store/member'
 import { useEffect, useState } from 'react'
+import { useGetParams } from '@/hooks/useGetParams'
 const List = Form.List
 
 const options: ListItemValue[] = [
@@ -26,23 +26,25 @@ export default function ProjectMemberRole({
 
   const onUpdate = (val: ListItemValue) => {
     console.log('update', val.id)
+    if (!projectId) return
+    
     const newRole = val.id as MemberRole
     updateMemberRole(uid, newRole)
-    projectId && memUpdateRole(uid, projectId, newRole)
-        .then(res => {
-          const { status, data } = res.data
+    memUpdateRole(uid, projectId, newRole)
+      .then(res => {
+        const { status, data } = res.data
 
-          if (status !== 200) {
-            messageError('Update role failure !')
-            return
-          }
+        if (status !== 200) {
+          messageError('Update role failure !')
+          return
+        }
 
-          console.log('update role successfully', data)
-        })
-        .catch(error => {
-          messageError('Update role failed!')
-          console.log(error)
-        })
+        console.log('update role successfully', data)
+      })
+      .catch(error => {
+        messageError('Update role failed!')
+        console.log(error)
+      })
   }
 
   useEffect(() => {

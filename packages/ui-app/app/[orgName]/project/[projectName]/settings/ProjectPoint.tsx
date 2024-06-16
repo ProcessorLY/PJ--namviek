@@ -124,6 +124,8 @@ export default function ProjectPoint() {
 
   const handleAddNewPoint = useCallback(
     async (v: number) => {
+      if (!projectId) return
+      
       const point: TaskPoint = {
         point: v,
         icon: null,

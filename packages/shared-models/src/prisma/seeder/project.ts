@@ -1,6 +1,6 @@
 import { MemberRole, Project, ProjectViewType, StatusType } from "@prisma/client"
 import { pmClient } from "../../lib/_prisma"
-import { generateSlug } from "@shared/libs"
+import { generateRandomString, generateSlug } from "@shared/libs"
 
 export const createProject = async (body: {
   icon?: string
@@ -22,7 +22,7 @@ export const createProject = async (body: {
         icon: body.icon || '',
         projectViewId: null,
         name: body.name,
-        slug: generateSlug(body.name),
+        slug: `{${generateSlug(body.name)}-${generateRandomString(3)}`,
         desc: body.desc,
         createdBy: body.uid,
         isArchived: false,
@@ -182,7 +182,7 @@ export const updateAllProjectSlug = async () => {
   const promises = []
   for (const project of projects) {
     const { id, name } = project
-    const slug = generateSlug(name)
+    const slug = `{${generateSlug(name)}-${generateRandomString(3)}`
 
     promises.push(updateProject(id, { name, slug }))
   }

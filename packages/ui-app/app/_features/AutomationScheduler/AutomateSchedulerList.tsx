@@ -15,6 +15,7 @@ const useSchedulerList = () => {
   const [schedulers, setScheduler] = useState<Scheduler[]>([])
 
   useDebounce(() => {
+    if(!projectId) return
     setLoading(true)
     schedulerService
       .getAll(projectId)

@@ -5,12 +5,12 @@ import StatusSelect from '@/components/StatusSelect'
 import { TaskPriority, TaskStatus, TaskType } from '@prisma/client'
 import { useFormik } from 'formik'
 import { validateTask } from '@shared/validation'
-import { useGetParams } from '@/hooks/useGetParams'
 import { useEffect, useState, useRef } from 'react'
 import { useProjectStatusStore } from 'packages/ui-app/store/status'
 import FileControl from '@/components/FileKits/FileControl'
 import Activity from '@/features/Activity'
 import TaskTypeSelect from '@/components/TaskTypeSelect'
+import { useGetParams } from '@/hooks/useGetParams'
 
 export const defaultFormikValues: ITaskDefaultValues = {
   title: '',
@@ -75,7 +75,6 @@ export default function TaskForm({
   const formik = useFormik({
     initialValues: refDefaultValue.current,
     onSubmit: values => {
-      if (!projectId) return
       if (loading) {
         messageWarning('Server is processing')
         return
@@ -156,16 +155,11 @@ export default function TaskForm({
           {/* {isUpdate ? <Activity /> : null} */}
         </div>
         <div
-          className={`task-form-right-actions space-y-3 ${
-            isCreate ? 'w-full' : 'sm:w-[200px]'
-          }  shrink-0`}>
-          <TaskTypeSelect
-            value={formik.values.type}
-            onChange={val => {
-              formik.setFieldValue('type', val)
-            }}
-            title="Task types"
-          />
+          className={`task-form-right-actions space-y-3 ${isCreate ? 'w-full' : 'sm:w-[200px]'
+            }  shrink-0`}>
+          <TaskTypeSelect value={formik.values.type} onChange={val => {
+            formik.setFieldValue('type', val)
+          }} title="Task types" />
           <MemberPicker
             title="Assignees"
             value={formik.values.assigneeIds[0]}

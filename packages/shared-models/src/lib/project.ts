@@ -20,6 +20,15 @@ export const mdProjectGetOrgId = async (projectId: string) => {
   })
 }
 
+export const checkProjectExists  = async (name: string, organizationId: string) => {
+  return projectModel.findFirst({
+    where: {
+      name,
+      organizationId,
+    }
+  })
+}
+
 export const mdProjectArchive = async ({
   projectId,
   isArchived,

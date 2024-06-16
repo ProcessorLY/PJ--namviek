@@ -49,8 +49,6 @@ export default function ProjectNavItem({
 
     onSelectProject(id)
     setMenuVisible(false)
-    localStorage.setItem('PROJECT_ID', id)
-    localStorage.setItem('PROJECT_SLUG_NAME', projectName)
     push(link)
   }
 

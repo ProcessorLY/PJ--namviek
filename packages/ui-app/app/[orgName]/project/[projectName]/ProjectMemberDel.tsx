@@ -13,16 +13,17 @@ export default function ProjectMemberDel({ uid }: { uid: string }) {
       title: 'Remove member',
       message: `Are you sure to want to remove this user from project ? Remember that it just kick user out of the project`,
       yes: () => {
+        if (!projectId) return
+        
         delMember(uid)
-        projectId &&
-          memDeleteFromProject(projectId, uid)
-            .then(res => {
-              console.log(res)
-            })
-            .catch(error => {
-              console.log(error)
-              messageError('Delete member error')
-            })
+        memDeleteFromProject(projectId, uid)
+          .then(res => {
+            console.log(res)
+          })
+          .catch(error => {
+            console.log(error)
+            messageError('Delete member error')
+          })
       }
     })
   }

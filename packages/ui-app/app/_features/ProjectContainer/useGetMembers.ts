@@ -5,11 +5,13 @@ import localforage from 'localforage'
 import { useGetParams } from '@/hooks/useGetParams'
 import { useEffect } from 'react'
 
-export const useGetMembersHandler = (projectId: string) => {
+export const useGetMembersHandler = (projectId?: string) => {
   const { addAllMember } = useMemberStore()
   const key = `PROJECT_MEMBER_${projectId}`
 
   const fetchMemberNCache = () => {
+    if(!projectId) return
+    
     const memberController = new AbortController()
     getProjectMember(projectId, memberController.signal)
       .then(res => {

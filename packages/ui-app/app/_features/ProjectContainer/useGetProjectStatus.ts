@@ -5,13 +5,14 @@ import localforage from 'localforage'
 import { useGetParams } from '@/hooks/useGetParams'
 import { useEffect } from 'react'
 
-export const useGetStatusHandler = (projectId: string, cb?: () => void) => {
+export const useGetStatusHandler = (projectId?: string, cb?: () => void) => {
   const { addAllStatuses, setStatusLoading } = useProjectStatusStore()
   const key = `PROJECT_STATUS_${projectId}`
   const setCache = (data: TaskStatus[]) => {
     localforage.setItem(key, data)
   }
   const fetchNCache = () => {
+    if (!projectId) return
     const statusController = new AbortController()
 
     setStatusLoading(true)

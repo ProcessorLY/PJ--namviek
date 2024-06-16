@@ -2,19 +2,19 @@ import { useEffect } from 'react'
 import { usePusher } from './usePusher'
 import { useUser } from '@goalie/nextjs'
 import { projectGet } from '@/services/project'
-import { useUrl } from '@/hooks/useUrl'
 import { useProjectStore } from '@/store/project'
 import localforage from 'localforage'
+import { useGetParams } from '@/hooks/useGetParams'
 
 export const useEventUserProjectUpdate = () => {
-  const { orgID } = useUrl()
+  const { orgId } = useGetParams()
   const { user } = useUser()
   const { channelTeamCollab } = usePusher()
   const { setLoading, addAllProject } = useProjectStore()
-  const keyList = `PROJECT_LIST_${orgID}`
+  const keyList = `PROJECT_LIST_${orgId}`
 
   useEffect(() => {
-    if (!user || !user.id) return
+    if (!user || !user.id || !orgId) return
     const eventName = `userProject:update.${user.id}`
 
     console.log('bind event:', eventName)
@@ -24,7 +24,7 @@ export const useEventUserProjectUpdate = () => {
         console.log('data:', eventName, data)
 
         projectGet({
-          orgId: orgID,
+          orgId,
           isArchive: false
         }).then(result => {
           const { data, status } = result.data

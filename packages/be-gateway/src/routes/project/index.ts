@@ -5,6 +5,7 @@ import {
   StatusType
 } from '@prisma/client'
 import {
+  checkProjectExists,
   mdMemberAdd,
   mdMemberGetProject,
   mdProjectAdd,
@@ -100,9 +101,15 @@ router.post('/project', async (req: AuthRequest, res) => {
   const { id: userId } = req.authen
 
   console.log('project data:', body.views, body.members)
+
   try {
     const views = body.views
     const members = body.members
+    const existingProject = await checkProjectExists(body.name, body.organizationId);
+    if (existingProject) {
+      res.status(500).send('DUPLICATE_PROJECT')
+      return
+    }
 
     pmClient.$transaction(async tx => {
 
