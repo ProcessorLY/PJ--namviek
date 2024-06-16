@@ -25,7 +25,6 @@ import TagRouter from './tag'
 import PinRouter from './pin'
 import { pmClient } from 'packages/shared-models/src/lib/_prisma'
 import { generateSlug } from '@shared/libs'
-import { Body } from '../../core'
 
 const router = Router()
 

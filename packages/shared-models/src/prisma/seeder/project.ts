@@ -199,7 +199,7 @@ export const updateProject = async (id: string, data: Partial<Project>) => {
       },
     })
 
-    console.log('update project succesfully')s
+    console.log('update project succesfully')
   } catch (error) {
     console.log('update project error', error)
     return null
