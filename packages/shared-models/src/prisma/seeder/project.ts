@@ -1,6 +1,24 @@
 import { MemberRole, Project, ProjectViewType, StatusType } from "@prisma/client"
 import { pmClient } from "../../lib/_prisma"
-import { generateRandomString, generateSlug } from "@shared/libs"
+import slugify from "slugify";
+// import { generateRandomString, generateSlug } from "@shared/libs"
+
+const generateRandomString = (length: number) => {
+  const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return result;
+}
+
+const generateSlug = (name: string) => {
+  return slugify(name, {
+    replacement: '-',
+    lower: true,
+    trim: true
+  })
+}
 
 export const createProject = async (body: {
   icon?: string
@@ -22,7 +40,7 @@ export const createProject = async (body: {
         icon: body.icon || '',
         projectViewId: null,
         name: body.name,
-        slug: `{${generateSlug(body.name)}-${generateRandomString(3)}`,
+        slug: `${generateSlug(body.name)}-${generateRandomString(3)}`,
         desc: body.desc,
         createdBy: body.uid,
         isArchived: false,
@@ -182,9 +200,11 @@ export const updateAllProjectSlug = async () => {
   const promises = []
   for (const project of projects) {
     const { id, name } = project
-    const slug = `{${generateSlug(name)}-${generateRandomString(3)}`
+    const slug = `${generateSlug(name)}-${generateRandomString(3)}`
 
-    promises.push(updateProject(id, { name, slug }))
+    promises.push(updateProject(id, { name, slug }).then(res => {
+      console.log('update project:', name, slug)
+    }))
   }
 
   await Promise.allSettled(promises)

@@ -1,8 +1,17 @@
 import { InvitationStatus, Organization, OrganizationRole } from "@prisma/client"
 import { pmClient } from "../../lib/_prisma"
-import { generateSlug } from "@shared/libs"
+import slugify from "slugify"
+// import { generateSlug } from "@shared/libs"
 
 const MAX_STORAGE_SIZE = 100 * 1024 * 1024 // 100Mb
+
+const generateSlug = (name: string) => {
+  return slugify(name, {
+    replacement: '-',
+    lower: true,
+    trim: true
+  })
+}
 
 export const createOrganization = async (body: {
   name: string,
